@@ -8,15 +8,19 @@
 
 #import "LoginViewController.h"
 #import "HomeViewController.h"
+#import "Reachability.h"
 @interface LoginViewController ()
 
 @end
 
 @implementation LoginViewController
-@synthesize userNameText,userPasswordText,Logoimg;
+@synthesize userNameText,userPasswordText,Logoimg,activityIndicator,appDelegate;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [activityIndicator stopAnimating];
+
     self.navigationController.navigationBarHidden=YES;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -71,6 +75,100 @@
     userPasswordText.background=[UIImage imageNamed:@"textfieldbg.PNG"];
     //[userPasswordText setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:userPasswordText];
+}
+- (void) threadStartAnimating:(id)data {
+    [activityIndicator startAnimating];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityIndicator];
+}
+
+-(IBAction)loginAction{
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"google.com"];
+    NetworkStatus myStatus = [myNetwork currentReachabilityStatus];
+    if(myStatus == NotReachable)
+    {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"No internet connection available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else{
+        if ([userNameText.text isEqualToString:@""] || [userPasswordText.text isEqualToString:@""]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delle Medical"
+                                                            message:@"Please fill in username and password."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }else{
+            [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+            
+            NSString* string2 = [appDelegate.deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+            NSURL *url;
+            NSMutableString *httpBodyString;
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
+            
+            NSString *urlString = [[NSString alloc]initWithFormat:@"https://bscpro.com/auth_api/login"];
+            url=[[NSURL alloc] initWithString:urlString];
+            NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
+            
+            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
+            
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                // your data or an error will be ready here
+                if (error)
+                {
+                    [activityIndicator stopAnimating];
+                    NSLog(@"Failed to submit request");
+                }
+                else
+                {
+                    [activityIndicator stopAnimating];
+                    NSString *content = [[NSString alloc]  initWithBytes:[data bytes]
+                                                                  length:[data length] encoding: NSUTF8StringEncoding];
+                    
+                    NSError *error;
+                    if ([NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] == nil) {
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Oops, we encountered an error or the site may be down for maintenance.  Please try again in a few minutes." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        
+                        [alert show];
+                        
+                    }else{
+                        NSDictionary *userDict=[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                        NSString *messages = [[NSString alloc]init];
+                        messages = [userDict objectForKey:@"message"];
+                        NSString *status = [[NSString alloc]init];
+                        status = [userDict objectForKey:@"status"];
+                        if([status isEqualToString:@"fail"])
+                        {
+                            
+                            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:messages delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [alert show];
+                        }else {
+                            NSError *error;
+                            NSDictionary *userDict=[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                            NSDictionary *userArray = [userDict objectForKey:@"user_profile"];
+                            
+                            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                           //[prefs setObject:lvo.userid forKey:@"loggedin"];
+                            [prefs synchronize];
+                            
+                            NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
+                            [prefsusername setObject:userNameText.text forKey:@"username"];
+                            [prefsusername synchronize];
+                            
+                            NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
+                            [prefspassword setObject:userPasswordText.text forKey:@"password"];
+                            [prefspassword synchronize];
+                            
+                            HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+                            [self.navigationController pushViewController:home animated:YES];
+                        }
+                    }
+                }
+            }];
+        }
+    }
 }
 
 -(void)animateTextField:(UITextField*)textField up:(BOOL)up

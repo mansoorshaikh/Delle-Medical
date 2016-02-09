@@ -86,6 +86,7 @@
     [self.view addSubview:mymedicalHistBtn];
 
       self.detail_view.layer.borderWidth = 2.0f;
+    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:detail_view];
     

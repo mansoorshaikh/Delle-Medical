@@ -107,8 +107,6 @@
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
    
-
- 
     [giorgiaBtn setTitle:@"GIORGIA VALENTINI" forState:UIControlStateNormal];
     [giorgiaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[giorgiaBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:22]];im

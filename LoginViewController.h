@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AppDelegate.h"
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 @property(nonatomic,retain) IBOutlet UITextField *userNameText;
 @property(nonatomic,retain) IBOutlet UITextField *userPasswordText;
 @property(nonatomic,retain) IBOutlet UIImageView *Logoimg;
+@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property(nonatomic,retain) AppDelegate *appDelegate;
+
 @end

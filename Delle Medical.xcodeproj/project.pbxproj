@@ -29,6 +29,9 @@
 		A46AEB441C685B750022D816 /* delle_logo_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A46AEB421C685B750022D816 /* delle_logo_500.jpg */; };
 		A46AEB471C6864C70022D816 /* delle_logo_200.png in Resources */ = {isa = PBXBuildFile; fileRef = A46AEB451C6864C70022D816 /* delle_logo_200.png */; };
 		A46AEB481C6864C70022D816 /* delle_logo_500.png in Resources */ = {isa = PBXBuildFile; fileRef = A46AEB461C6864C70022D816 /* delle_logo_500.png */; };
+		A48E9BFB1C69A8A700A9011E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E9BFA1C69A8A700A9011E /* Reachability.m */; };
+		A48E9C1C1C69D62100A9011E /* send_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = A48E9C1B1C69D62100A9011E /* send_btn.png */; };
+		A48E9C421C6A055E00A9011E /* sendmessagebtn_7.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */; };
 		A49E334B1C63268C00A1751B /* textfieldbg1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A49E334A1C63268C00A1751B /* textfieldbg1.PNG */; };
 		A49E334D1C632B1700A1751B /* textfieldbg2.png in Resources */ = {isa = PBXBuildFile; fileRef = A49E334C1C632B1700A1751B /* textfieldbg2.png */; };
 		A49E33581C63417E00A1751B /* RESwitch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49E33551C63417E00A1751B /* RESwitch.bundle */; };
@@ -82,7 +85,6 @@
 		A4B799AC1C65FDA400FA923D /* Default768x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B7999E1C65FDA300FA923D /* Default768x1024.png */; };
 		A4B799AD1C65FDA400FA923D /* Default768x1024@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B7999F1C65FDA300FA923D /* Default768x1024@2x.png */; };
 		A4B799AE1C65FDA400FA923D /* Default1536x2048@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B799A01C65FDA300FA923D /* Default1536x2048@2x.png */; };
-		A4B799AF1C65FDA400FA923D /* Defaults-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B799A11C65FDA300FA923D /* Defaults-568h@2x.png */; };
 		A4B799B01C65FDA400FA923D /* Defaults-1136h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B799A21C65FDA300FA923D /* Defaults-1136h@2x.png */; };
 		A4F51B431C5F307600EE7A20 /* off_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A4F51B411C5F307600EE7A20 /* off_icon.png */; };
 		A4F51B441C5F307600EE7A20 /* on_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A4F51B421C5F307600EE7A20 /* on_icon.png */; };
@@ -129,6 +131,10 @@
 		A46AEB421C685B750022D816 /* delle_logo_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = delle_logo_500.jpg; path = images/delle_logo_500.jpg; sourceTree = "<group>"; };
 		A46AEB451C6864C70022D816 /* delle_logo_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delle_logo_200.png; path = images/delle_logo_200.png; sourceTree = "<group>"; };
 		A46AEB461C6864C70022D816 /* delle_logo_500.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = delle_logo_500.png; path = images/delle_logo_500.png; sourceTree = "<group>"; };
+		A48E9BF91C69A8A700A9011E /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A48E9BFA1C69A8A700A9011E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		A48E9C1B1C69D62100A9011E /* send_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = send_btn.png; path = images/send_btn.png; sourceTree = "<group>"; };
+		A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sendmessagebtn_7.PNG; path = images/sendmessagebtn_7.PNG; sourceTree = "<group>"; };
 		A49E334A1C63268C00A1751B /* textfieldbg1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = textfieldbg1.PNG; path = images/textfieldbg1.PNG; sourceTree = "<group>"; };
 		A49E334C1C632B1700A1751B /* textfieldbg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = textfieldbg2.png; path = images/textfieldbg2.png; sourceTree = "<group>"; };
 		A49E33551C63417E00A1751B /* RESwitch.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = RESwitch.bundle; path = Switchy/RESwitch.bundle; sourceTree = "<group>"; };
@@ -207,7 +213,6 @@
 		A4B7999E1C65FDA300FA923D /* Default768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default768x1024.png; path = images/Default768x1024.png; sourceTree = "<group>"; };
 		A4B7999F1C65FDA300FA923D /* Default768x1024@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default768x1024@2x.png"; path = "images/Default768x1024@2x.png"; sourceTree = "<group>"; };
 		A4B799A01C65FDA300FA923D /* Default1536x2048@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default1536x2048@2x.png"; path = "images/Default1536x2048@2x.png"; sourceTree = "<group>"; };
-		A4B799A11C65FDA300FA923D /* Defaults-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Defaults-568h@2x.png"; path = "images/Defaults-568h@2x.png"; sourceTree = "<group>"; };
 		A4B799A21C65FDA300FA923D /* Defaults-1136h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Defaults-1136h@2x.png"; path = "images/Defaults-1136h@2x.png"; sourceTree = "<group>"; };
 		A4F51B411C5F307600EE7A20 /* off_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = off_icon.png; path = images/off_icon.png; sourceTree = "<group>"; };
 		A4F51B421C5F307600EE7A20 /* on_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = on_icon.png; path = images/on_icon.png; sourceTree = "<group>"; };
@@ -252,6 +257,8 @@
 		A454CEB51C5B889100552856 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */,
+				A48E9C1B1C69D62100A9011E /* send_btn.png */,
 				A4AD20D91C68C935006A2068 /* switch_back_3.png */,
 				A4AD20DA1C68C935006A2068 /* Switch_Knob@3x.png */,
 				A46AEB451C6864C70022D816 /* delle_logo_200.png */,
@@ -270,7 +277,6 @@
 				A4B7999E1C65FDA300FA923D /* Default768x1024.png */,
 				A4B7999F1C65FDA300FA923D /* Default768x1024@2x.png */,
 				A4B799A01C65FDA300FA923D /* Default1536x2048@2x.png */,
-				A4B799A11C65FDA300FA923D /* Defaults-568h@2x.png */,
 				A4B799A21C65FDA300FA923D /* Defaults-1136h@2x.png */,
 				A49E33601C6363A100A1751B /* backBtn1.png */,
 				A49E335A1C63468D00A1751B /* Switch_Background@2x.png */,
@@ -420,6 +426,8 @@
 				A454CEB51C5B889100552856 /* Images */,
 				A4FA7DEE1C5A4DD200C747B2 /* AppDelegate.h */,
 				A4FA7DEF1C5A4DD200C747B2 /* AppDelegate.m */,
+				A48E9BF91C69A8A700A9011E /* Reachability.h */,
+				A48E9BFA1C69A8A700A9011E /* Reachability.m */,
 				A4FA7DF11C5A4DD200C747B2 /* ViewController.h */,
 				A4FA7DF21C5A4DD200C747B2 /* ViewController.m */,
 				A4FA7E021C5A4DF400C747B2 /* LoginViewController.h */,
@@ -551,6 +559,8 @@
 				A4FD1EF21C5F657F000A96D6 /* button_blue.png in Resources */,
 				A4F51B431C5F307600EE7A20 /* off_icon.png in Resources */,
 				A454CEA51C5B72A300552856 /* HomeViewController.xib in Resources */,
+				A48E9C1C1C69D62100A9011E /* send_btn.png in Resources */,
+				A48E9C421C6A055E00A9011E /* sendmessagebtn_7.PNG in Resources */,
 				A49E334D1C632B1700A1751B /* textfieldbg2.png in Resources */,
 				A4FA7DF81C5A4DD200C747B2 /* Assets.xcassets in Resources */,
 				A454CEAF1C5B803E00552856 /* CenterNotificationViewController.xib in Resources */,
@@ -560,7 +570,6 @@
 				A454CEBF1C5BA5CF00552856 /* textfieldbg.PNG in Resources */,
 				A4B799A71C65FDA400FA923D /* Default-Landscape@2x.png in Resources */,
 				A4B799B01C65FDA400FA923D /* Defaults-1136h@2x.png in Resources */,
-				A4B799AF1C65FDA400FA923D /* Defaults-568h@2x.png in Resources */,
 				A454CECA1C5BB62800552856 /* bgbutton_title_2.png in Resources */,
 				A4B799A31C65FDA400FA923D /* Default-568h@2x.png in Resources */,
 				A454CEC61C5BB0A900552856 /* HelveticaNeue_Bold_Font.ttf in Resources */,
@@ -591,6 +600,7 @@
 				A4A32A941C6072AC0045357E /* ReaderDocument.m in Sources */,
 				A4A32A9A1C6072AC0045357E /* ReaderThumbQueue.m in Sources */,
 				A49E336D1C63691300A1751B /* UIColor+Expanded.m in Sources */,
+				A48E9BFB1C69A8A700A9011E /* Reachability.m in Sources */,
 				A4FA7DF01C5A4DD200C747B2 /* AppDelegate.m in Sources */,
 				A49E33591C63417E00A1751B /* RESwitch.m in Sources */,
 				A4A32A961C6072AC0045357E /* ReaderMainPagebar.m in Sources */,

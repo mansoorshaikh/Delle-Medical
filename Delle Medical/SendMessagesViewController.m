@@ -35,13 +35,13 @@
         detail_view=[[UIView alloc]initWithFrame:CGRectMake(10, yheightposition, ywidth-20, yheights-(yheightposition+100))];
         detailsTxtView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,self.detail_view.bounds.size.width, self.detail_view.bounds.size.height)];
         msgSendBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-90,ywidth-20,30)];
-        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-50,80,30)];
+        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-55,80,35)];
         
         [giorgiaLbl setFont:[UIFont boldSystemFontOfSize: 20]];
         [sendMsgBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
         detailsTxtView.font = [UIFont boldSystemFontOfSize:20.0f];
         [msgSendBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:24]];
-        [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+        [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
 
     }else{
         Logoimg=[[UIImageView alloc ]initWithFrame:CGRectMake(10,yheightposition,ywidthsspotlight,yheightsspotlight)];
@@ -67,7 +67,6 @@
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
   
- 
     [giorgiaLbl removeFromSuperview];
       giorgiaLbl.text=@"GIORGIA VALENTINI";
     [[giorgiaLbl layer] setCornerRadius:5.0f];
@@ -77,7 +76,6 @@
     [giorgiaLbl setBackgroundColor:[UIColor darkGrayColor]];
     [self.view addSubview:giorgiaLbl];
       
-   
     [sendMsgBtn setTitle:@"SEND MESSAGE TO THE CENTER" forState:UIControlStateNormal];
   
     [sendMsgBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -86,16 +84,15 @@
     //[sendMsgBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:sendMsgBtn];
 
-  
     self.detail_view.layer.borderWidth = 1.0f;
     self.detail_view.layer.cornerRadius = 8;
+    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:detail_view];
 
-  
     detailsTxtView.text = @"PATIENT MESSAGE TO BE SEND TO CENTER SOFTWARE";
     //fhfdescriptionView.userInteractionEnabled=NO;
-    detailsTxtView.layer.borderColor=[[UIColor blackColor]CGColor];
+    detailsTxtView.layer.borderColor=[[UIColor grayColor]CGColor];
     detailsTxtView.layer.borderWidth=2.0;
     detailsTxtView.layer.cornerRadius=8;
     detailsTxtView.scrollEnabled = YES;
@@ -105,16 +102,15 @@
     [self.detail_view addSubview:detailsTxtView];
 
        [msgSendBtn setTitle:@"SEND MESSAGE" forState:UIControlStateNormal];
-    [msgSendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [msgSendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   
     //[msgSendBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
     msgSendBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [msgSendBtn setBackgroundImage:[UIImage imageNamed:@"button_send.png"] forState:UIControlStateNormal];
-    //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
+    [msgSendBtn setBackgroundImage:[UIImage imageNamed:@"sendmessagebtn_7.PNG"] forState:UIControlStateNormal];
+    //[msgSendBtn setBackgroundColor:[UIColor lightGrayColor]];
+    //msgSendBtn.layer.cornerRadius=8;
     [self.view addSubview:msgSendBtn];
 
-
- 
     [backBtn setTitle:@"Back" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
@@ -122,7 +118,6 @@
        [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn1.png"] forState:UIControlStateNormal];
     //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:backBtn];
-
 }
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {

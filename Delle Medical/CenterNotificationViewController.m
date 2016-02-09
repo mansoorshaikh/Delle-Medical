@@ -91,6 +91,7 @@
   
     self.detail_view.layer.borderWidth = 2.0f;
     [detail_view setBackgroundColor:[UIColor clearColor]];
+    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
     [self.view addSubview:detail_view];
     
     
