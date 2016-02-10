@@ -14,5 +14,6 @@
 @property(nonatomic,retain) IBOutlet UITextView *detailsTxtView;
 @property(nonatomic,retain) IBOutlet UIImageView *Logoimg;
 @property(nonatomic,retain) IBOutlet UIView *detail_view;
+@property(nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end

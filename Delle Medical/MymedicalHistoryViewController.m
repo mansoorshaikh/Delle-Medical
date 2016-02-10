@@ -8,17 +8,31 @@
 
 #import "MymedicalHistoryViewController.h"
 #import "ReaderViewController.h"
-
+#import "Reachability.h"
 @interface MymedicalHistoryViewController ()<ReaderViewControllerDelegate>
 
 @end
 
 @implementation MymedicalHistoryViewController
-@synthesize giorgiaLbl,mymedicalHistBtn,detailsTxtView,backBtn,Logoimg,detail_view,pdgFormBtn,scanedBtn;
+@synthesize giorgiaLbl,mymedicalHistBtn,detailsTxtView,backBtn,Logoimg,detail_view,pdgFormBtn,scanedBtn,DestPath,activityIndicator,webView,pdfUrl;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     CGRect screenRect = [[UIScreen mainScreen] bounds];
+
+    /*NSString *filepath=@"http://mobiwebsoft.com/DELLE/pdf_doc/pdf_demo.pdf";
+    NSURL *fileURL = [NSURL URLWithString:filepath];
+    webView=[[UIWebView alloc]initWithFrame:CGRectMake(0, 0,screenRect.size.width,screenRect.size.height)];
+    //[webView setBackgroundColor:[UIColor blackColor]];
+    webView.delegate=self ;
+    //self.webView.mediaPlaybackRequiresUserAction = NO;
+    [webView setBackgroundColor:[UIColor clearColor]];
+    [webView setOpaque:NO];
+
+    	[webView loadRequest:[NSURLRequest requestWithURL:fileURL]];
+    [self.view addSubview:webView];*/
+    
+    [activityIndicator stopAnimating];
     CGFloat ywidth = screenRect.size.width;
     CGFloat yheights = screenRect.size.height;
     CGFloat ywidthsspotlight = (screenRect.size.width*35)/100;
@@ -65,9 +79,11 @@
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
  
-  
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+
     [giorgiaLbl removeFromSuperview];
-    giorgiaLbl.text=@"GIORGIA VALENTINI";
+    giorgiaLbl.text=names;
     [[giorgiaLbl layer] setCornerRadius:5.0f];
     [[giorgiaLbl layer] setMasksToBounds:YES];
     giorgiaLbl.textAlignment = UITextAlignmentCenter;
@@ -82,10 +98,12 @@
     [mymedicalHistBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     mymedicalHistBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     //[mymedicalHistBtn setBackgroundColor:[UIColor grayColor]];
-    [mymedicalHistBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [mymedicalHistBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
     [self.view addSubview:mymedicalHistBtn];
 
       self.detail_view.layer.borderWidth = 2.0f;
+    detail_view.layer.cornerRadius = 6;
+    detail_view.layer.masksToBounds = YES;
     detail_view.layer.borderColor = [UIColor grayColor].CGColor;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:detail_view];
@@ -93,7 +111,7 @@
   
     [pdgFormBtn setTitle:@"PDF FROM PATIENT DATABASE" forState:UIControlStateNormal];
     [pdgFormBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-      //[pdgFormBtn addTarget:self action:@selector(handleSingleTap:) forControlEvents:UIControlEventTouchUpInside];
+    [pdgFormBtn addTarget:self action:@selector(StorePdffile) forControlEvents:UIControlEventTouchUpInside];
     pdgFormBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     //[pdgFormBtn setBackgroundImage:[UIImage imageNamed:@"btnbg.png"] forState:UIControlStateNormal];
     [pdgFormBtn setBackgroundColor:[UIColor clearColor]];
@@ -109,7 +127,7 @@
     [scanedBtn setBackgroundColor:[UIColor clearColor]];
     [self.detail_view addSubview:scanedBtn];
 
-       [backBtn setTitle:@"Back" forState:UIControlStateNormal];
+    [backBtn setTitle:@"Back" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
     backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -118,17 +136,57 @@
     //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:backBtn];
     
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+   // NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     
-    NSString *name = [infoDictionary objectForKey:@"CFBundleName"];
+    //NSString *name = [infoDictionary objectForKey:@"CFBundleName"];
     
-    NSString *version = [infoDictionary objectForKey:@"CFBundleVersion"];
+//NSString *version = [infoDictionary objectForKey:@"CFBundleVersion"];
     
-    self.title = [[NSString alloc] initWithFormat:@"%@ v%@", name, version];
+   // self.title = [[NSString alloc] initWithFormat:@"%@ v%@", name, version];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    //singleTap.numberOfTouchesRequired = 1; singleTap.numberOfTapsRequired = 1; //singleTap.delegate = self;
-    [self.view addGestureRecognizer:singleTap];
+    singleTap.numberOfTouchesRequired = 1; singleTap.numberOfTapsRequired = 1; //singleTap.delegate = self;
+    //[self.scanedBtn addGestureRecognizer:singleTap];
 }
+- (void) threadStartAnimating:(id)data {
+    [activityIndicator startAnimating];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityIndicator];
+}
+
+-(void)StorePdffile{
+    [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"google.com"];
+    NetworkStatus myStatus = [myNetwork currentReachabilityStatus];
+    if(myStatus == NotReachable)
+    {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"No internet connection available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [activityIndicator stopAnimating];
+
+    }else{
+
+ 
+    NSData *pdfData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://mobiwebsoft.com/DELLE/pdf_doc/pdf_demo.pdf"]];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"myPDF11.pdf"];
+    [pdfData writeToFile:filePath atomically:YES];
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath]){
+        [self handleSingleTap];
+        [activityIndicator stopAnimating];
+
+    } else {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Pdf is not downloading please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        [activityIndicator stopAnimating];
+
+        }
+    }
+}
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -170,15 +228,18 @@
     [super viewDidUnload];
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+- (void)handleSingleTap
 {
     NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
     
     NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
-    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"myPDF11.pdf"];
+
     //NSString *filePath = [pdfs firstObject]; assert(filePath != nil); // Path to first PDF file
     
-    NSString *filePath=@"/Users/arvind/Library/Developer/CoreSimulator/Devices/CB8A560C-45D4-46EE-A8B8-0C93FFD2D074/data/Containers/Bundle/Application/8ECFB229-7BB1-4170-924B-A2C50465BE39/Reader.app/Reader.pdf";
+   // NSString *filePath=@"/Users/arvind/Library/Developer/CoreSimulator/Devices/CB8A560C-45D4-46EE-A8B8-0C93FFD2D074/data/Containers/Bundle/Application/8ECFB229-7BB1-4170-924B-A2C50465BE39/Reader.app/Reader.pdf";
     ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
     
     if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
@@ -204,6 +265,47 @@
     {
         NSLog(@"%s [ReaderDocument withDocumentFilePath:'%@' password:'%@'] failed.", __FUNCTION__, filePath, phrase);
     }
+}
+
+
+//open pdf code is here
+-(void)openPDFcode{
+    NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
+    
+    NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"myPDF11.pdf"];
+    
+    //NSString *filePath = [pdfs firstObject]; assert(filePath != nil); // Path to first PDF file
+    
+    // NSString *filePath=@"/Users/arvind/Library/Developer/CoreSimulator/Devices/CB8A560C-45D4-46EE-A8B8-0C93FFD2D074/data/Containers/Bundle/Application/8ECFB229-7BB1-4170-924B-A2C50465BE39/Reader.app/Reader.pdf";
+    ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
+    
+    if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
+    {
+        ReaderViewController *readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
+        
+        readerViewController.delegate = self; // Set the ReaderViewController delegate to self
+        
+#if (DEMO_VIEW_CONTROLLER_PUSH == TRUE)
+        
+        [self.navigationController pushViewController:readerViewController animated:YES];
+        
+#else // present in a modal view controller
+        
+        readerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        readerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+        [self presentViewController:readerViewController animated:YES completion:NULL];
+        
+#endif // DEMO_VIEW_CONTROLLER_PUSH
+    }
+    else // Log an error so that we know that something went wrong
+    {
+        NSLog(@"%s [ReaderDocument withDocumentFilePath:'%@' password:'%@'] failed.", __FUNCTION__, filePath, phrase);
+    }
+
 }
 
 #pragma mark - ReaderViewControllerDelegate methods

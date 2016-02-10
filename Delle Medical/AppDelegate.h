@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property(nonatomic,retain) NSString *deviceToken;
+@property (strong, nonatomic) UINavigationController *navController;
 
 
 @end

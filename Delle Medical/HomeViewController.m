@@ -106,8 +106,11 @@
     //Logoimg.layer.shadowOpacity = 0.2;
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
-   
-    [giorgiaBtn setTitle:@"GIORGIA VALENTINI" forState:UIControlStateNormal];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString * name=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+    
+    [giorgiaBtn setTitle:name forState:UIControlStateNormal];
     [giorgiaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[giorgiaBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:22]];im
     //[giorgiaBtn setBackgroundImage:[UIImage imageNamed:@"bgbutton_title_2.png"] forState:UIControlStateNormal];
@@ -119,7 +122,7 @@
 
         [mymedicalHistBtn setTitle:@"MY MEDICAL HISTORY" forState:UIControlStateNormal];
     [mymedicalHistBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [mymedicalHistBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [mymedicalHistBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
       [mymedicalHistBtn addTarget:self action:@selector(myMedicalHistory) forControlEvents:UIControlEventTouchUpInside];
     mymedicalHistBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     //[mymedicalHistBtn setBackgroundColor:[UIColor grayColor]];
@@ -142,7 +145,7 @@
     [centernotificaionBtn addTarget:self action:@selector(centerNotification) forControlEvents:UIControlEventTouchUpInside];
     [centernotificaionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
    
-    [centernotificaionBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [centernotificaionBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
     centernotificaionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     //[centernotificaionBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:centernotificaionBtn];
@@ -152,7 +155,7 @@
   
     [sendMsgBtn setTitle:@"SEND MESSAGE" forState:UIControlStateNormal];
     [sendMsgBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sendMsgBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [sendMsgBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
    
     [sendMsgBtn addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     sendMsgBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -176,7 +179,7 @@
        
     [pushNotificationBtn setTitle:@" Push notification" forState:UIControlStateNormal];
     [pushNotificationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [pushNotificationBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [pushNotificationBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
    
     //[pushNotificationBtn addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
     pushNotificationBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;

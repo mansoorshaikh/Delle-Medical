@@ -72,8 +72,11 @@
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+
     [giorgiaLbl removeFromSuperview];
-       giorgiaLbl.text=@"GIORGIA VALENTINI";
+       giorgiaLbl.text=names;
     [[giorgiaLbl layer] setCornerRadius:5.0f];
     [[giorgiaLbl layer] setMasksToBounds:YES];
     giorgiaLbl.textAlignment = UITextAlignmentCenter;
@@ -83,13 +86,15 @@
  
     [centernotificaionBtn setTitle:@"CENTER NOTIFICATIONS" forState:UIControlStateNormal];
     [centernotificaionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [centernotificaionBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [centernotificaionBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
       centernotificaionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     //[centernotificaionBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:centernotificaionBtn];
     
   
     self.detail_view.layer.borderWidth = 2.0f;
+    detail_view.layer.cornerRadius = 6;
+    detail_view.layer.masksToBounds = YES;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     detail_view.layer.borderColor = [UIColor grayColor].CGColor;
     [self.view addSubview:detail_view];

@@ -7,16 +7,17 @@
 //
 
 #import "SendMessagesViewController.h"
-
+#import "Reachability.h"
 @interface SendMessagesViewController ()
 
 @end
 
 @implementation SendMessagesViewController
-@synthesize giorgiaLbl,sendMsgBtn,detailsTxtView,backBtn,Logoimg,msgSendBtn,detail_view;
+@synthesize giorgiaLbl,sendMsgBtn,detailsTxtView,backBtn,Logoimg,msgSendBtn,detail_view,activityIndicator;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [activityIndicator stopAnimating];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat ywidth = screenRect.size.width;
     CGFloat yheights = screenRect.size.height;
@@ -58,7 +59,6 @@
         detailsTxtView.font = [UIFont boldSystemFontOfSize:35.0f];
         [msgSendBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:30]];
         [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
-
     }
         
     Logoimg.tintColor=[UIColor whiteColor];
@@ -66,9 +66,11 @@
     //Logoimg.layer.shadowOpacity = 0.2;
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
-  
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+
     [giorgiaLbl removeFromSuperview];
-      giorgiaLbl.text=@"GIORGIA VALENTINI";
+    giorgiaLbl.text=names;
     [[giorgiaLbl layer] setCornerRadius:5.0f];
     [[giorgiaLbl layer] setMasksToBounds:YES];
     giorgiaLbl.textAlignment = UITextAlignmentCenter;
@@ -80,7 +82,7 @@
   
     [sendMsgBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sendMsgBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [sendMsgBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg2.png"] forState:UIControlStateNormal];
+    [sendMsgBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
     //[sendMsgBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:sendMsgBtn];
 
@@ -104,7 +106,7 @@
        [msgSendBtn setTitle:@"SEND MESSAGE" forState:UIControlStateNormal];
     [msgSendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   
-    //[msgSendBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
+    [msgSendBtn addTarget:self action:@selector(sendMsgAction   ) forControlEvents:UIControlEventTouchUpInside];
     msgSendBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [msgSendBtn setBackgroundImage:[UIImage imageNamed:@"sendmessagebtn_7.PNG"] forState:UIControlStateNormal];
     //[msgSendBtn setBackgroundColor:[UIColor lightGrayColor]];
@@ -130,6 +132,73 @@
 -(void)viewDidAppear:(BOOL)animated{
     
 }
+- (void) threadStartAnimating:(id)data {
+    [activityIndicator startAnimating];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityIndicator];
+}
+
+-(IBAction)sendMsgAction{
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"google.com"];
+    NetworkStatus myStatus = [myNetwork currentReachabilityStatus];
+    if(myStatus == NotReachable)
+    {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"No internet connection available!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else{
+        if ([detailsTxtView.text isEqualToString:@""] || [detailsTxtView.text isEqualToString:@"PATIENT MESSAGE TO BE SEND TO CENTER SOFTWARE"]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delle Medical"
+                                                            message:@"Please fill in value"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }else{
+            [NSThread detachNewThreadSelector:@selector(threadStartAnimating:) toTarget:self withObject:nil];
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            
+            NSURL *url;
+            NSMutableString *httpBodyString;
+            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"patientid=%@&messagetext=%@",[prefs objectForKey:@"loggedin"],detailsTxtView.text]];
+            
+            NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/receiveMsgFromApp.php?"];
+            url=[[NSURL alloc] initWithString:urlString];
+            NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
+            
+            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
+            
+            [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                // your data or an error will be ready here
+                if (error)
+                {
+                    [activityIndicator stopAnimating];
+                    NSLog(@"Failed to submit request");
+                }
+                else
+                {
+                    NSString *content = [[NSString alloc]  initWithBytes:[data bytes]
+                                                                  length:[data length] encoding: NSUTF8StringEncoding];
+                    NSError *error;
+
+                    if ([content isEqualToString:@"Success"]) {
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Message send Successfully!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        
+                        [alert show];
+                        detailsTxtView.text=@"";
+                    }else{
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Your username and password is wrong please check!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                    }
+                }
+                [activityIndicator stopAnimating];
+
+            }];
+        }
+    }
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
     if([text isEqualToString:@"\n"]) {

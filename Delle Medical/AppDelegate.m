@@ -8,23 +8,45 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "HomeViewController.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+@synthesize deviceToken,navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    LoginViewController *login;
-           login=[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-    
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:login];
-    navController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    self.window.rootViewController=navController;
-    [self.window makeKeyAndVisible];
-
+    if (launchOptions != nil) {
+        // Launched from push notification
+        NSDictionary *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        
+        HomeViewController *mainController = [[HomeViewController alloc]initWithNibName:NSStringFromClass([HomeViewController class]) bundle:nil];
+        
+        [self.window.rootViewController presentModalViewController:mainController animated:NO];
+    }
+    else
+    {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+            [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        }
+        else
+        {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+             (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+        }
+        LoginViewController *loginviewController;
+        
+            loginviewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+        
+        self.navController = [[UINavigationController alloc] initWithRootViewController:loginviewController];
+        self.window.rootViewController = self.navController;
+        [self.window makeKeyAndVisible];
+    }
+    // Override point for customization after application launch.
     return YES;
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -32,8 +54,12 @@
     NSLog(@"My token is: %@", deviceToken);
     NSString *deviceTokenString=[[[[NSString stringWithFormat:@"%@",deviceToken] stringByReplacingOccurrencesOfString:@"<" withString:@""] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.deviceToken=deviceTokenString;
+    
 }
-
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    NSLog(@"Failed to get token, error: %@", error);
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

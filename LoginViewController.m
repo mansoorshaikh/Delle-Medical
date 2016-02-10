@@ -75,6 +75,14 @@
     userPasswordText.background=[UIImage imageNamed:@"textfieldbg.PNG"];
     //[userPasswordText setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:userPasswordText];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if([prefs stringForKey:@"loggedin"]!=nil){
+        HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+        [self.navigationController pushViewController:home animated:YES];
+
+    }
+
 }
 - (void) threadStartAnimating:(id)data {
     [activityIndicator startAnimating];
@@ -107,7 +115,7 @@
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
             httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
             
-            NSString *urlString = [[NSString alloc]initWithFormat:@"https://bscpro.com/auth_api/login"];
+            NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/loginuser.php?"];
             url=[[NSURL alloc] initWithString:urlString];
             NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
             
@@ -123,49 +131,36 @@
                 }
                 else
                 {
-                    [activityIndicator stopAnimating];
                     NSString *content = [[NSString alloc]  initWithBytes:[data bytes]
                                                                   length:[data length] encoding: NSUTF8StringEncoding];
                     
-                    NSError *error;
-                    if ([NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error] == nil) {
-                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Oops, we encountered an error or the site may be down for maintenance.  Please try again in a few minutes." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    if ([content isEqualToString:@"no"] || [content isEqualToString:@""]) {
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Your username and password is wrong please check!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         
                         [alert show];
-                        
+
                     }else{
-                        NSDictionary *userDict=[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                        NSString *messages = [[NSString alloc]init];
-                        messages = [userDict objectForKey:@"message"];
-                        NSString *status = [[NSString alloc]init];
-                        status = [userDict objectForKey:@"status"];
-                        if([status isEqualToString:@"fail"])
-                        {
-                            
-                            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:messages delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [alert show];
-                        }else {
-                            NSError *error;
-                            NSDictionary *userDict=[NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                            NSDictionary *userArray = [userDict objectForKey:@"user_profile"];
-                            
+                    NSError *error;
+                        NSArray* foo = [content componentsSeparatedByString: @","];
+
+                        NSString* userid = [foo objectAtIndex:[foo count] -3];
+                        NSString* firstname = [foo objectAtIndex:[foo count]-2];
+                        NSString* lastname = [foo objectAtIndex:[foo count]-1];
+
+                        
                             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-                           //[prefs setObject:lvo.userid forKey:@"loggedin"];
+                           [prefs setObject:userid forKey:@"loggedin"];
+                            [prefs setObject:firstname forKey:@"firstname"];
+                            [prefs setObject:lastname forKey:@"lastname"];
                             [prefs synchronize];
-                            
-                            NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
-                            [prefsusername setObject:userNameText.text forKey:@"username"];
-                            [prefsusername synchronize];
-                            
-                            NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
-                            [prefspassword setObject:userPasswordText.text forKey:@"password"];
-                            [prefspassword synchronize];
-                            
+                        
                             HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
                             [self.navigationController pushViewController:home animated:YES];
+                            
                         }
-                    }
                 }
+                [activityIndicator stopAnimating];
+
             }];
         }
     }
@@ -203,14 +198,9 @@
     }
     else if (textField == self.userPasswordText) {
         [self.userPasswordText resignFirstResponder];
-        [self goTOHomePage];
+        [self loginAction];
     }
     return true;
-}
--(void)goTOHomePage{
-    HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    [self.navigationController pushViewController:home animated:YES];
-
 }
 
 - (void)didReceiveMemoryWarning {

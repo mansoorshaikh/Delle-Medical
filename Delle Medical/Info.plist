@@ -46,5 +46,10 @@
 		<string>fontawesome-webfont.ttf</string>
 		<string>HelveticaNeue_Bold_Font.ttf</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
