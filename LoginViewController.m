@@ -20,7 +20,7 @@
     // Do any additional setup after loading the view from its nib.
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
     [activityIndicator stopAnimating];
-
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
     self.navigationController.navigationBarHidden=YES;
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -63,7 +63,6 @@
     userNameText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"USERNAME" attributes:@{NSForegroundColorAttributeName: color}];
 
     [self.view addSubview:userNameText];
-    
    
     userPasswordText.delegate = self;
     userPasswordText.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"PASSWORD" attributes:@{NSForegroundColorAttributeName: color}];
@@ -80,9 +79,7 @@
     if([prefs stringForKey:@"loggedin"]!=nil){
         HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
         [self.navigationController pushViewController:home animated:YES];
-
     }
-
 }
 - (void) threadStartAnimating:(id)data {
     [activityIndicator startAnimating];
@@ -113,12 +110,18 @@
             NSURL *url;
             NSMutableString *httpBodyString;
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
             
-            NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/loginuser.php?"];
+            
+        httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"API_KEY=GCORE_OTT_STV_49A29F1E_4EJJ6D"]];
+            
+            NSString *urlString = [[NSString alloc]initWithFormat:@"http://smarttv-ott.gemcore.network/api/ProgramPopularShows"];
+
+            //httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
+            
+      //      NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/loginuser.php?"];
             url=[[NSURL alloc] initWithString:urlString];
             NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
-            
+            [urlRequest addValue:@"GCORE_OTT_STV_49A29F1E_4EJJ6D" forHTTPHeaderField:@"API_KEY"];
             [urlRequest setHTTPMethod:@"POST"];
             [urlRequest setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
             
@@ -147,7 +150,6 @@
                         NSString* firstname = [foo objectAtIndex:[foo count]-2];
                         NSString* lastname = [foo objectAtIndex:[foo count]-1];
 
-                        
                             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
                            [prefs setObject:userid forKey:@"loggedin"];
                             [prefs setObject:firstname forKey:@"firstname"];
@@ -156,7 +158,6 @@
                         
                             HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
                             [self.navigationController pushViewController:home animated:YES];
-                            
                         }
                 }
                 [activityIndicator stopAnimating];
@@ -166,6 +167,11 @@
     }
 }
 
+-(void)goTohomeTest{
+    HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    [self.navigationController pushViewController:home animated:YES];
+ 
+}
 -(void)animateTextField:(UITextField*)textField up:(BOOL)up
 {
     const int movementDistance = -170; // tweak as needed
@@ -199,6 +205,9 @@
     else if (textField == self.userPasswordText) {
         [self.userPasswordText resignFirstResponder];
         [self loginAction];
+        //[self goTohomeTest];
+
+        
     }
     return true;
 }

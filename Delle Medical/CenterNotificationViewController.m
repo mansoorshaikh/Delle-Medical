@@ -7,7 +7,7 @@
 //
 
 #import "CenterNotificationViewController.h"
-
+#import "UIColor+Expanded.h"
 @interface CenterNotificationViewController ()
 
 @end
@@ -39,7 +39,7 @@
         detail_view=[[UIView alloc]initWithFrame:CGRectMake(10, yheightposition, ywidth-20, yheights-(yheightposition+70))];
         notificationlistBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,10,ywidth-40,30)];
         appointmentBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,50,ywidth-40,30)];
-        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(20,yheights-50,80,30)];
+        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-50,80,30)];
         
         [giorgiaLbl setFont:[UIFont boldSystemFontOfSize: 20]];
         [centernotificaionBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
@@ -65,7 +65,6 @@
         [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
 
     }
-
       Logoimg.tintColor=[UIColor whiteColor];
     [Logoimg setImage:[UIImage imageNamed:@"delle_logo_200.png"]];
     //Logoimg.layer.shadowOpacity = 0.2;
@@ -91,15 +90,13 @@
     //[centernotificaionBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:centernotificaionBtn];
     
-  
-    self.detail_view.layer.borderWidth = 2.0f;
-    detail_view.layer.cornerRadius = 6;
+    self.detail_view.layer.borderWidth = 2.5f;
+    detail_view.layer.cornerRadius = 7;
     detail_view.layer.masksToBounds = YES;
     [detail_view setBackgroundColor:[UIColor clearColor]];
-    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
+   // detail_view.layer.borderColor = [UIColor colorWithString:@"#969596"].CGColor;
+    detail_view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [self.view addSubview:detail_view];
-    
-    
   
     [notificationlistBtn setTitle:@"NOTIFICATIONS LIST" forState:UIControlStateNormal];
     [notificationlistBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -108,7 +105,6 @@
     //[notificationlistBtn setBackgroundImage:[UIImage imageNamed:@"btnbg.png"] forState:UIControlStateNormal];
     [notificationlistBtn setBackgroundColor:[UIColor clearColor]];
     [self.detail_view addSubview:notificationlistBtn];
-    
    
     [appointmentBtn setTitle:@"APPOINTMENT/THERAPY/EVENTS" forState:UIControlStateNormal];
     [appointmentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -118,14 +114,12 @@
     //[appointmentBtn setBackgroundImage:[UIImage imageNamed:@"btnbg.png"] forState:UIControlStateNormal];
     [appointmentBtn setBackgroundColor:[UIColor clearColor]];
     [self.detail_view addSubview:appointmentBtn];
-
-    
    
     [backBtn setTitle:@"Back" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
     backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-       [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn1.png"] forState:UIControlStateNormal];
+       [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn2.png"] forState:UIControlStateNormal];
     //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:backBtn];
 

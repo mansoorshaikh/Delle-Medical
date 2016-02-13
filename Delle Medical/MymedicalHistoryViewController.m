@@ -9,6 +9,10 @@
 #import "MymedicalHistoryViewController.h"
 #import "ReaderViewController.h"
 #import "Reachability.h"
+#import "UIColor+Expanded.h"
+#import "UIImage+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 @interface MymedicalHistoryViewController ()<ReaderViewControllerDelegate>
 
 @end
@@ -48,7 +52,7 @@
         detail_view=[[UIView alloc]initWithFrame:CGRectMake(10, yheightposition, ywidth-20, yheights-(yheightposition+70))];
         pdgFormBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,10,ywidth-40,30)];
         scanedBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,50,ywidth-40,30)];
-        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(20,yheights-50,80,30)];
+        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-50,80,30)];
         
         [giorgiaLbl setFont:[UIFont boldSystemFontOfSize: 20]];
         [mymedicalHistBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
@@ -71,7 +75,6 @@
         [scanedBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
         [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
     }
-
    
     Logoimg.tintColor=[UIColor whiteColor];
     [Logoimg setImage:[UIImage imageNamed:@"delle_logo_200.png"]];
@@ -92,23 +95,21 @@
     [self.view addSubview:giorgiaLbl];
    
     [mymedicalHistBtn removeFromSuperview];
-  
     [mymedicalHistBtn setTitle:@"MY MEDICAL HISTORY" forState:UIControlStateNormal];
-   
     [mymedicalHistBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     mymedicalHistBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     //[mymedicalHistBtn setBackgroundColor:[UIColor grayColor]];
     [mymedicalHistBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
     [self.view addSubview:mymedicalHistBtn];
 
-      self.detail_view.layer.borderWidth = 2.0f;
-    detail_view.layer.cornerRadius = 6;
+      self.detail_view.layer.borderWidth = 2.5f;
+    detail_view.layer.cornerRadius = 7;
     detail_view.layer.masksToBounds = YES;
-    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
+    detail_view.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //detail_view.layer.borderColor = [UIColor colorWithRed:150/255 green:149/255 blue:150/255 alpha:1.0].CGColor;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:detail_view];
     
-  
     [pdgFormBtn setTitle:@"PDF FROM PATIENT DATABASE" forState:UIControlStateNormal];
     [pdgFormBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [pdgFormBtn addTarget:self action:@selector(StorePdffile) forControlEvents:UIControlEventTouchUpInside];
@@ -117,7 +118,6 @@
     [pdgFormBtn setBackgroundColor:[UIColor clearColor]];
     [self.detail_view addSubview:pdgFormBtn];
 
-  
     [scanedBtn setTitle:@"NO IMAGES OR SCANNED DOCUMENTS" forState:UIControlStateNormal];
     [scanedBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   
@@ -132,20 +132,10 @@
     [backBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
     backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   
-    [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn1.png"] forState:UIControlStateNormal];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn2.png"] forState:UIControlStateNormal];
     //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:backBtn];
     
-   // NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    
-    //NSString *name = [infoDictionary objectForKey:@"CFBundleName"];
-    
-//NSString *version = [infoDictionary objectForKey:@"CFBundleVersion"];
-    
-   // self.title = [[NSString alloc] initWithFormat:@"%@ v%@", name, version];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    singleTap.numberOfTouchesRequired = 1; singleTap.numberOfTapsRequired = 1; //singleTap.delegate = self;
-    //[self.scanedBtn addGestureRecognizer:singleTap];
 }
 - (void) threadStartAnimating:(id)data {
     [activityIndicator startAnimating];
@@ -166,8 +156,7 @@
 
     }else{
 
- 
-    NSData *pdfData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://mobiwebsoft.com/DELLE/pdf_doc/pdf_demo.pdf"]];
+     NSData *pdfData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://mobiwebsoft.com/DELLE/pdf_doc/pdf_demo.pdf"]];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -237,9 +226,6 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"myPDF11.pdf"];
 
-    //NSString *filePath = [pdfs firstObject]; assert(filePath != nil); // Path to first PDF file
-    
-   // NSString *filePath=@"/Users/arvind/Library/Developer/CoreSimulator/Devices/CB8A560C-45D4-46EE-A8B8-0C93FFD2D074/data/Containers/Bundle/Application/8ECFB229-7BB1-4170-924B-A2C50465BE39/Reader.app/Reader.pdf";
     ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
     
     if (document != nil) // Must have a valid ReaderDocument object in order to proceed with things
@@ -305,7 +291,6 @@
     {
         NSLog(@"%s [ReaderDocument withDocumentFilePath:'%@' password:'%@'] failed.", __FUNCTION__, filePath, phrase);
     }
-
 }
 
 #pragma mark - ReaderViewControllerDelegate methods

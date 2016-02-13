@@ -21,9 +21,7 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat ywidth = screenRect.size.width;
     CGFloat yheights = screenRect.size.height;
-
     int yheightposition=25;
-
     [Logoimg removeFromSuperview];
     CGFloat ywidthsspotlight = (screenRect.size.width*35)/100;
     CGFloat yheightsspotlight = (screenRect.size.height*20)/100;
@@ -36,14 +34,13 @@
         detail_view=[[UIView alloc]initWithFrame:CGRectMake(10, yheightposition, ywidth-20, yheights-(yheightposition+100))];
         detailsTxtView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,self.detail_view.bounds.size.width, self.detail_view.bounds.size.height)];
         msgSendBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-90,ywidth-20,30)];
-        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-55,80,35)];
+        backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-50,80,30)];
         
         [giorgiaLbl setFont:[UIFont boldSystemFontOfSize: 20]];
         [sendMsgBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:11]];
         detailsTxtView.font = [UIFont boldSystemFontOfSize:20.0f];
         [msgSendBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:24]];
         [backBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-
     }else{
         Logoimg=[[UIImageView alloc ]initWithFrame:CGRectMake(10,yheightposition,ywidthsspotlight,yheightsspotlight)];
         yheightposition=yheightposition+yheightsspotlight+60;
@@ -53,7 +50,7 @@
         detailsTxtView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0,self.detail_view.bounds.size.width, self.detail_view.bounds.size.height)];
         msgSendBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-150,ywidth-20,60)];
         backBtn=[[UIButton alloc]initWithFrame:CGRectMake(10,yheights-70,140,50)];
-        
+
         [giorgiaLbl setFont:[UIFont boldSystemFontOfSize: 35]];
         [sendMsgBtn.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:25]];
         detailsTxtView.font = [UIFont boldSystemFontOfSize:35.0f];
@@ -79,33 +76,30 @@
     [self.view addSubview:giorgiaLbl];
       
     [sendMsgBtn setTitle:@"SEND MESSAGE TO THE CENTER" forState:UIControlStateNormal];
-  
     [sendMsgBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     sendMsgBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [sendMsgBtn setBackgroundImage:[UIImage imageNamed:@"textfieldbg.PNG"] forState:UIControlStateNormal];
     //[sendMsgBtn setBackgroundColor:[UIColor grayColor]];
     [self.view addSubview:sendMsgBtn];
 
-    self.detail_view.layer.borderWidth = 1.0f;
-    self.detail_view.layer.cornerRadius = 8;
-    detail_view.layer.borderColor = [UIColor grayColor].CGColor;
+    self.detail_view.layer.borderWidth = 2.5f;
+    self.detail_view.layer.cornerRadius = 7;
+    detail_view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [detail_view setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:detail_view];
 
     detailsTxtView.text = @"PATIENT MESSAGE TO BE SEND TO CENTER SOFTWARE";
-    //fhfdescriptionView.userInteractionEnabled=NO;
-    detailsTxtView.layer.borderColor=[[UIColor grayColor]CGColor];
-    detailsTxtView.layer.borderWidth=2.0;
-    detailsTxtView.layer.cornerRadius=8;
+    //descriptionView.userInteractionEnabled=NO;
+    detailsTxtView.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    detailsTxtView.layer.borderWidth=2.5;
+    detailsTxtView.layer.cornerRadius=7;
     detailsTxtView.scrollEnabled = YES;
     self.detailsTxtView.delegate = self;
-  
     detailsTxtView.backgroundColor=[UIColor clearColor];
     [self.detail_view addSubview:detailsTxtView];
 
        [msgSendBtn setTitle:@"SEND MESSAGE" forState:UIControlStateNormal];
     [msgSendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  
     [msgSendBtn addTarget:self action:@selector(sendMsgAction   ) forControlEvents:UIControlEventTouchUpInside];
     msgSendBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [msgSendBtn setBackgroundImage:[UIImage imageNamed:@"sendmessagebtn_7.PNG"] forState:UIControlStateNormal];
@@ -117,7 +111,7 @@
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(BackAction) forControlEvents:UIControlEventTouchUpInside];
     backBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-       [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn1.png"] forState:UIControlStateNormal];
+       [backBtn setBackgroundImage:[UIImage imageNamed:@"backBtn2.png"] forState:UIControlStateNormal];
     //[backBtn setBackgroundColor:[UIColor lightGrayColor]];
     [self.view addSubview:backBtn];
 }
@@ -161,11 +155,9 @@
             NSURL *url;
             NSMutableString *httpBodyString;
             httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"patientid=%@&messagetext=%@",[prefs objectForKey:@"loggedin"],detailsTxtView.text]];
-            
             NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/receiveMsgFromApp.php?"];
             url=[[NSURL alloc] initWithString:urlString];
             NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
-            
             [urlRequest setHTTPMethod:@"POST"];
             [urlRequest setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
             
@@ -188,12 +180,11 @@
                         [alert show];
                         detailsTxtView.text=@"";
                     }else{
-                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Your username and password is wrong please check!!!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Delle Medical" message:@"Message is not send please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                         [alert show];
                     }
                 }
                 [activityIndicator stopAnimating];
-
             }];
         }
     }

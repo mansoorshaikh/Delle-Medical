@@ -88,6 +88,8 @@
 		A4B799B01C65FDA400FA923D /* Defaults-1136h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B799A21C65FDA300FA923D /* Defaults-1136h@2x.png */; };
 		A4F51B431C5F307600EE7A20 /* off_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A4F51B411C5F307600EE7A20 /* off_icon.png */; };
 		A4F51B441C5F307600EE7A20 /* on_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A4F51B421C5F307600EE7A20 /* on_icon.png */; };
+		A4F6B57B1C6C762000F5BF8C /* backBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = A4F6B57A1C6C762000F5BF8C /* backBtn2.png */; };
+		A4F6B57D1C6C9E5800F5BF8C /* textfieldbg_100.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A4F6B57C1C6C9E5800F5BF8C /* textfieldbg_100.PNG */; };
 		A4FA7DED1C5A4DD200C747B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FA7DEC1C5A4DD200C747B2 /* main.m */; };
 		A4FA7DF01C5A4DD200C747B2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FA7DEF1C5A4DD200C747B2 /* AppDelegate.m */; };
 		A4FA7DF31C5A4DD200C747B2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FA7DF21C5A4DD200C747B2 /* ViewController.m */; };
@@ -216,6 +218,8 @@
 		A4B799A21C65FDA300FA923D /* Defaults-1136h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Defaults-1136h@2x.png"; path = "images/Defaults-1136h@2x.png"; sourceTree = "<group>"; };
 		A4F51B411C5F307600EE7A20 /* off_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = off_icon.png; path = images/off_icon.png; sourceTree = "<group>"; };
 		A4F51B421C5F307600EE7A20 /* on_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = on_icon.png; path = images/on_icon.png; sourceTree = "<group>"; };
+		A4F6B57A1C6C762000F5BF8C /* backBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backBtn2.png; path = images/backBtn2.png; sourceTree = "<group>"; };
+		A4F6B57C1C6C9E5800F5BF8C /* textfieldbg_100.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = textfieldbg_100.PNG; path = images/textfieldbg_100.PNG; sourceTree = "<group>"; };
 		A4FA7DE81C5A4DD200C747B2 /* Delle Medical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delle Medical.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4FA7DEC1C5A4DD200C747B2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A4FA7DEE1C5A4DD200C747B2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 		A454CEB51C5B889100552856 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A4F6B57C1C6C9E5800F5BF8C /* textfieldbg_100.PNG */,
+				A4F6B57A1C6C762000F5BF8C /* backBtn2.png */,
 				A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */,
 				A48E9C1B1C69D62100A9011E /* send_btn.png */,
 				A4AD20D91C68C935006A2068 /* switch_back_3.png */,
@@ -541,6 +547,7 @@
 				A4AD20DC1C68C935006A2068 /* Switch_Knob@3x.png in Resources */,
 				A4B799AC1C65FDA400FA923D /* Default768x1024.png in Resources */,
 				A4FD1EF61C5F6930000A96D6 /* button_send.png in Resources */,
+				A4F6B57D1C6C9E5800F5BF8C /* textfieldbg_100.PNG in Resources */,
 				A4B799A51C65FDA400FA923D /* Default-736h@3x.png in Resources */,
 				A49E335F1C63556800A1751B /* off_iconImage.png in Resources */,
 				A4B799A41C65FDA400FA923D /* Default-667h@2x.png in Resources */,
@@ -565,6 +572,7 @@
 				A4FA7DF81C5A4DD200C747B2 /* Assets.xcassets in Resources */,
 				A454CEAF1C5B803E00552856 /* CenterNotificationViewController.xib in Resources */,
 				A4FA7DF61C5A4DD200C747B2 /* Main.storyboard in Resources */,
+				A4F6B57B1C6C762000F5BF8C /* backBtn2.png in Resources */,
 				A454CEAA1C5B801600552856 /* MymedicalHistoryViewController.xib in Resources */,
 				A454CEBA1C5B8CCC00552856 /* Default.png in Resources */,
 				A454CEBF1C5BA5CF00552856 /* textfieldbg.PNG in Resources */,
