@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LoginViewController.m"
-            timestampString = "476895199.930812"
+            filePath = "Delle Medical/SendMessagesViewController.m"
+            timestampString = "478254589.50947"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "-loginAction"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "-sendMsgAction"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

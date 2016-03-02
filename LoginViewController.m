@@ -76,7 +76,7 @@
     [self.view addSubview:userPasswordText];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if([prefs stringForKey:@"loggedin"]!=nil){
+    if([prefs stringForKey:@"id"]!=nil){
         HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
         [self.navigationController pushViewController:home animated:YES];
     }
@@ -112,16 +112,13 @@
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
             
             
-        httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"API_KEY=GCORE_OTT_STV_49A29F1E_4EJJ6D"]];
-            
-            NSString *urlString = [[NSString alloc]initWithFormat:@"http://smarttv-ott.gemcore.network/api/ProgramPopularShows"];
 
-            //httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
+            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"username=%@&password=%@&device_id=%@&device_type=iPhone",userNameText.text,userPasswordText.text,string2]];
             
-      //      NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/loginuser.php?"];
+            NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/loginuserJson.php?"];
             url=[[NSURL alloc] initWithString:urlString];
             NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
-            [urlRequest addValue:@"GCORE_OTT_STV_49A29F1E_4EJJ6D" forHTTPHeaderField:@"API_KEY"];
+            
             [urlRequest setHTTPMethod:@"POST"];
             [urlRequest setHTTPBody:[httpBodyString dataUsingEncoding:NSISOLatin1StringEncoding]];
             
@@ -144,18 +141,35 @@
 
                     }else{
                     NSError *error;
-                        NSArray* foo = [content componentsSeparatedByString: @","];
-
-                        NSString* userid = [foo objectAtIndex:[foo count] -3];
-                        NSString* firstname = [foo objectAtIndex:[foo count]-2];
-                        NSString* lastname = [foo objectAtIndex:[foo count]-1];
-
-                            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-                           [prefs setObject:userid forKey:@"loggedin"];
-                            [prefs setObject:firstname forKey:@"firstname"];
-                            [prefs setObject:lastname forKey:@"lastname"];
-                            [prefs synchronize];
                         
+                        NSDictionary *userDict=[NSJSONSerialization JSONObjectWithData:data
+                                                                               options:NSJSONReadingMutableContainers
+                                                                                 error:&error];
+                        NSDictionary *activityArray=[[userDict objectForKey:@"userdetail"] objectForKey:@"user"];
+
+                        
+                        NSString *userid = [[NSString alloc]init];
+                        NSString *surname = [[NSString alloc]init];
+                        NSString *name = [[NSString alloc]init];
+
+                            if ([activityArray objectForKey:@"id"] != [NSNull null])
+                           userid=[activityArray objectForKey:@"id"];
+                            surname=[activityArray objectForKey:@"surname"];
+                            name=[activityArray objectForKey:@"name"];
+                        
+                        
+                        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                        [prefs setObject:userid forKey:@"id"];
+                        [prefs synchronize];
+                        
+                        NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
+                        [prefsusername setObject:surname forKey:@"surname"];
+                        [prefsusername synchronize];
+                        
+                        NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
+                        [prefspassword setObject:name forKey:@"name"];
+                        [prefspassword synchronize];
+
                             HomeViewController *home=[[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
                             [self.navigationController pushViewController:home animated:YES];
                         }

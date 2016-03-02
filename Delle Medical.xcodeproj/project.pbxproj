@@ -32,6 +32,7 @@
 		A48E9BFB1C69A8A700A9011E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E9BFA1C69A8A700A9011E /* Reachability.m */; };
 		A48E9C1C1C69D62100A9011E /* send_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = A48E9C1B1C69D62100A9011E /* send_btn.png */; };
 		A48E9C421C6A055E00A9011E /* sendmessagebtn_7.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */; };
+		A49CCC1B1C81877D00AB1CCF /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A49CCC1A1C81877D00AB1CCF /* libxml2.dylib */; };
 		A49E334B1C63268C00A1751B /* textfieldbg1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = A49E334A1C63268C00A1751B /* textfieldbg1.PNG */; };
 		A49E334D1C632B1700A1751B /* textfieldbg2.png in Resources */ = {isa = PBXBuildFile; fileRef = A49E334C1C632B1700A1751B /* textfieldbg2.png */; };
 		A49E33581C63417E00A1751B /* RESwitch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A49E33551C63417E00A1751B /* RESwitch.bundle */; };
@@ -137,6 +138,7 @@
 		A48E9BFA1C69A8A700A9011E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		A48E9C1B1C69D62100A9011E /* send_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = send_btn.png; path = images/send_btn.png; sourceTree = "<group>"; };
 		A48E9C411C6A055E00A9011E /* sendmessagebtn_7.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sendmessagebtn_7.PNG; path = images/sendmessagebtn_7.PNG; sourceTree = "<group>"; };
+		A49CCC1A1C81877D00AB1CCF /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = "../../../Library/Developer/Xcode/iOS DeviceSupport/9.2 (13C75)/Symbols/usr/lib/libxml2.dylib"; sourceTree = "<group>"; };
 		A49E334A1C63268C00A1751B /* textfieldbg1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = textfieldbg1.PNG; path = images/textfieldbg1.PNG; sourceTree = "<group>"; };
 		A49E334C1C632B1700A1751B /* textfieldbg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = textfieldbg2.png; path = images/textfieldbg2.png; sourceTree = "<group>"; };
 		A49E33551C63417E00A1751B /* RESwitch.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = RESwitch.bundle; path = Switchy/RESwitch.bundle; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49CCC1B1C81877D00AB1CCF /* libxml2.dylib in Frameworks */,
 				A4A32AB11C6076B50045357E /* ImageIO.framework in Frameworks */,
 				A4A32AAF1C6076AE0045357E /* MessageUI.framework in Frameworks */,
 				A4A32AAD1C6076A50045357E /* QuartzCore.framework in Frameworks */,
@@ -403,6 +406,7 @@
 		A4FA7DDF1C5A4DD200C747B2 = {
 			isa = PBXGroup;
 			children = (
+				A49CCC1A1C81877D00AB1CCF /* libxml2.dylib */,
 				A4A32AB01C6076B50045357E /* ImageIO.framework */,
 				A4A32AAE1C6076AE0045357E /* MessageUI.framework */,
 				A4A32AAC1C6076A50045357E /* QuartzCore.framework */,

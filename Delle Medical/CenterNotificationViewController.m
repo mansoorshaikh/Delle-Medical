@@ -71,8 +71,11 @@
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
    
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+    NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
+    
+    NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
+    
+    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefspassword objectForKey:@"name"],[prefsusername objectForKey:@"surname"]]];
 
     [giorgiaLbl removeFromSuperview];
        giorgiaLbl.text=names;

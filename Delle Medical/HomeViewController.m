@@ -125,9 +125,11 @@
     //Logoimg.layer.shadowOpacity = 0.2;
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
+    NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSString * name=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+    NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
+    
+    NSString * name=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefspassword objectForKey:@"name"],[prefsusername objectForKey:@"surname"]]];
     
     [giorgiaBtn setTitle:name forState:UIControlStateNormal];
     [giorgiaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -221,7 +223,7 @@
     login=[[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     [self.navigationController pushViewController:login animated:NO];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    [prefs removeObjectForKey:@"loggedin"];
+    [prefs removeObjectForKey:@"id"];
     [prefs synchronize];
 }
 

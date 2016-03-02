@@ -63,8 +63,11 @@
     //Logoimg.layer.shadowOpacity = 0.2;
     Logoimg.alpha=1.0;
     [self.view addSubview:Logoimg];
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefs objectForKey:@"firstname"],[prefs objectForKey:@"lastname"]]];
+    NSUserDefaults *prefsusername = [NSUserDefaults standardUserDefaults];
+    
+    NSUserDefaults *prefspassword = [NSUserDefaults standardUserDefaults];
+    
+    NSString * names=[[NSString alloc] initWithString:[NSString stringWithFormat:@"%@ %@",[prefspassword objectForKey:@"name"],[prefsusername objectForKey:@"surname"]]];
 
     [giorgiaLbl removeFromSuperview];
     giorgiaLbl.text=names;
@@ -154,7 +157,7 @@
             
             NSURL *url;
             NSMutableString *httpBodyString;
-            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"patientid=%@&messagetext=%@",[prefs objectForKey:@"loggedin"],detailsTxtView.text]];
+            httpBodyString=[[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"patientid=%@&messagetext=%@",[prefs objectForKey:@"id"],detailsTxtView.text]];
             NSString *urlString = [[NSString alloc]initWithFormat:@"http://mobiwebsoft.com/DELLE/receiveMsgFromApp.php?"];
             url=[[NSURL alloc] initWithString:urlString];
             NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:url];
